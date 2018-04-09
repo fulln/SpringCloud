@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!--实体类生成xml-->
+<generatorConfiguration>
+    <context id="MysqlContext" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.0.109:3306/car_monitor_test"
+                        userId="listen"
+                        password="12345">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.fulln.pips.Entity" targetProject="src\main\java">
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--<sqlMapGenerator targetPackage="test.xml"  targetProject="src\main\resources\mapper"/>-->
+
+        <!--<javaClientGenerator type="XMLMAPPER" targetPackage="test.dao"  targetProject="src\main\java\com\fulln\pips\Dao"/>-->
+
+        <table tableName="mon_gis_basic">
+            <generatedKey column="gis_monitor_id" sqlStatement="Mysql"/>
+        </table>
+    </context>
+</generatorConfiguration>
