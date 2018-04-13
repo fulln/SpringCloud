@@ -3,9 +3,7 @@ package com.fulln.config.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 
@@ -23,7 +21,7 @@ public class fileUtil {
         props = new Properties();
         InputStream in = null;
         try {
-            in = fileUtil.class.getClassLoader().getResourceAsStream("application.properties");
+            in =fileUtil.class.getClassLoader().getResourceAsStream("application.properties");
             props.load(in);
         } catch (FileNotFoundException e) {
             logger.error("配置文件未找到");
@@ -45,9 +43,27 @@ public class fileUtil {
             loadProps();
         }
         if (key != null && !"".equals(key)) {
-            return props.getProperty(key);
+            return  props.getProperty(key);
         } else {
             return null;
+        }
+    }
+
+    /**
+     * 写入文件
+     */
+    public static void writeToFile(String FileName,StringBuffer sb){
+        PrintStream ps =null;
+        try {
+        File f= new File(FileName);
+             ps = new PrintStream(new FileOutputStream(f),true);
+            ps.println(sb);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            if(ps != null){
+                ps.close();
+            }
         }
     }
 

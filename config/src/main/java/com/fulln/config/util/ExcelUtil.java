@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -36,7 +37,7 @@ public class ExcelUtil {
         if (null != wb) {
             int n = wb.getNumberOfSheets();
             Sheet sh = wb.getSheetAt(sheetIndex);
-            Sheetname= wb.getSheetName(sheetIndex+1);
+            Sheetname= wb.getSheetName(sheetIndex);
             int rows = sh.getPhysicalNumberOfRows();
             int cells = sh.getRow(0).getLastCellNum();
             for (int i = skipRows; i < rows; i++) {
@@ -61,7 +62,8 @@ public class ExcelUtil {
                         } else if (s == Cell.CELL_TYPE_NUMERIC) {
                             r[ColumnIndex] = String.format("%.0f", row.getCell(c).getNumericCellValue());
                         }else if(s == Cell.CELL_TYPE_FORMULA){
-                            r[ColumnIndex] = String.valueOf(row.getCell(c).getDateCellValue());
+                            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            r[ColumnIndex] = sdf.format(row.getCell(c).getDateCellValue());
                         }
                     }
                 }

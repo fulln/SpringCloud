@@ -15,7 +15,7 @@ public class sqlUtil {
 
     private static List<CreateTableVO> tb;
 
-    static void load() {
+    private void load() {
 
         String filePath = fileUtil.getProperty("loadFile");
         int sheetIndex = fileUtil.getProperty("sheetIndex") == null ? 0 : Integer.parseInt(fileUtil.getProperty("sheetIndex"));
@@ -49,20 +49,87 @@ public class sqlUtil {
         }
     }
 
-    public static void main(String[] args) {
+    //mysql数据库
+    private StringBuffer MysqlDatas() {
         load();
+        //表名
         StringBuffer sb = new StringBuffer();
-        String SheetName = fileUtil.getProperty("sheetname");
+        //表名中文名称
+        String TableName = fileUtil.getProperty("tablename");
+        String SheetName = fileUtil.getProperty("tableEngname");
+        //索引(建议还是建表后单独加入，因为这里只能添加单字段索引)
+        StringBuffer indexs = null;
         if (SheetName == null) {
             SheetName = ExcelUtil.Sheetname;
         }
-        sb.append("CREATE TABLE" + SheetName +"(");
-        tb.forEach(t -> {
-            sb.append(" `"+t.getCloumName()+"` ");
 
+        sb.append(" DROP TABLE IF EXISTS "+SheetName+";");
+        sb.append(" CREATE TABLE `" + SheetName + "` (");
 
+        int s = tb.size() - 1;
 
-        });
+        for (CreateTableVO t : tb) {
+
+            sb.append(" `" + t.getCloumName() + "` ");
+            sb.append(" " + t.getCloumType());
+            if (t.getCloumLength() != null) {
+                sb.append("(" + t.getCloumLength() + ") ");
+            }
+
+            if (t.getDecimal() != null) {
+                sb.append("(" + t.getCloumLength() + ") ");
+            }
+            if (t.getIsParmyKey() == 1) {
+                sb.append(" auto_increment ");
+            } else {
+                if (t.getIsNull() != null) {
+                    sb.append(" " + t.getIsNull() + " ");
+                }
+            }
+            if (t.getIsUniqueKey() == 1) {
+                indexs.append(", UNIQUE KEY `" + t.getCloumName() + "` (`" + t.getCloumName() + "`) ");
+            }
+            if (t.getDefaultValue() != null) {
+                sb.append(" DEFAULT " + t.getDefaultValue() + " ");
+            } else {
+                if (t.getIsNull() == null)
+                    sb.append(" DEFAULT NULL ");
+            }
+            sb.append(" COMMENT " + "'" + t.getCloumDescribName() + "'");
+            if (t.getIsParmyKey() == 1) {
+                sb.append(" PRIMARY KEY ");
+            }
+            if (s != 0) {
+                sb.append(",");
+            }
+            s--;
+        }
+        if (indexs != null)
+            sb.append(indexs);
+        sb.append(" )" + "ENGINE=InnoDB DEFAULT CHARSET=utf8 ");
+        sb.append("COMMENT='" + TableName + "'");
+
+        System.out.println(sb);
+        return sb;
+    }
+
+    //写入.sql文件
+    public void writeToSql() {
+        String loadPath = fileUtil.getProperty("loadFile");
+        String TableName = fileUtil.getProperty("tablename");
+        int idx = loadPath.lastIndexOf("/");
+        loadPath = loadPath.substring(0, idx);
+
+        String pathFile = fileUtil.getProperty("pathFile");
+        String FileName = loadPath.trim()+"/"+ TableName + ".sql";
+        if (pathFile != null){
+            FileName = pathFile.trim()+"/"+TableName + ".sql";
+        }
+        fileUtil.writeToFile(FileName,MysqlDatas());
+    }
+
+    public static void main(String[] args) {
+        new sqlUtil().writeToSql();
     }
 
 }
