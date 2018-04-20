@@ -7,15 +7,27 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="config" />
+        <module name="consumer" />
         <module name="eureka" />
+        <module name="eureka-feign" />
+        <module name="eureka_slaver1" />
+        <module name="eureka_slaver2" />
+        <module name="eurekaMasters" />
         <module name="pips" />
+        <module name="provider" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="config" target="1.8" />
+      <module name="consumer" target="1.8" />
       <module name="eureka" target="1.8" />
+      <module name="eureka-feign" target="1.8" />
+      <module name="eureka_slaver1" target="1.8" />
+      <module name="eureka_slaver2" target="1.8" />
+      <module name="eurekaMasters" target="1.8" />
       <module name="eurekaService" target="1.8" />
       <module name="pips" target="1.8" />
+      <module name="provider" target="1.8" />
       <module name="springCloud" target="1.8" />
     </bytecodeTargetLevel>
   </component>

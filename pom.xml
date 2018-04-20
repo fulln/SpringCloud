@@ -38,7 +38,10 @@
     <modules>
         <module>config</module>
         <module>pips</module>
-        <module>eureka</module>
+        <module>consumer</module>
+        <module>eurekaMasters</module>
+        <module>eureka-feign</module>
+        <module>provider</module>
     </modules>
 
 </project>
