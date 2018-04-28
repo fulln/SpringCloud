@@ -36,8 +36,22 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
-	</dependencies>
-
+        <!--断路器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!--&lt;!&ndash;断路器仪表盘&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>-->
+        <!--</dependency>-->
+        <!--断路器springBoot依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
 	<build>
 		<plugins>
 			<plugin>

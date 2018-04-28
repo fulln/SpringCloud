@@ -3,8 +3,7 @@ package com.fulln.pips.Controller.baseController;
 import com.fulln.pips.Entity.userEmpEntity;
 import com.fulln.pips.Service.ISysLoginService;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +30,7 @@ public class detailController {
         return null;
     }
 
-    @GetMapping("/getAge")
+    @PostMapping("/getAge")
     private String  getAge(@RequestParam("age") Integer age){
         return age+30+"";
     }
