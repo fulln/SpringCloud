@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
+        <module name="api-youdao" />
         <module name="config" />
         <module name="consumer" />
         <module name="eureka" />
@@ -21,6 +22,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api-gateway" target="1.8" />
+      <module name="api-youdao" target="1.8" />
       <module name="config" target="1.8" />
       <module name="consumer" target="1.8" />
       <module name="eureka" target="1.8" />

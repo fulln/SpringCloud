@@ -11,7 +11,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableEurekaClient
 @EnableHystrix// 启动断路器，如果要监控hystrix的流必须开启此注解，即使fegin已经通过属性
-@EnableHystrixDashboard//启动dashboard
 public class EurekaFeignApplication {
 
 	public static void main(String[] args) {

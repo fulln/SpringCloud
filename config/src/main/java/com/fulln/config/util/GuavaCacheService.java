@@ -12,7 +12,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 直接实现接口 比aop方便？
+ * 直接实现接口 比DI？
+ * 这个缓存设置过期时间最多10分钟
  */
 public interface GuavaCacheService {
 

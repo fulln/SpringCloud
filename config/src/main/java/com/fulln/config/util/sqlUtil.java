@@ -52,12 +52,13 @@ public class sqlUtil {
     //mysql数据库
     private StringBuffer MysqlDatas() {
         load();
-        //表名
+
         StringBuffer sb = new StringBuffer();
         //表名中文名称
         String TableName = fileUtil.getProperty("tablename");
+        //表名
         String SheetName = fileUtil.getProperty("tableEngname");
-        //索引(建议还是建表后单独加入，因为这里只能添加单字段索引)
+        //索引(建议还是建表后单独加入，因为这里只添加了单字段索引与主键索引的判断)
         StringBuffer indexs = null;
         if (SheetName == null) {
             SheetName = ExcelUtil.Sheetname;
@@ -72,6 +73,7 @@ public class sqlUtil {
 
             sb.append(" `" + t.getCloumName() + "` ");
             sb.append(" " + t.getCloumType());
+
             if (t.getCloumLength() != null) {
                 sb.append("(" + t.getCloumLength() + ") ");
             }
