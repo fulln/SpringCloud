@@ -44,6 +44,7 @@
         <module>provider</module>
         <module>turbine</module>
         <module>api-gateway</module>
+        <module>api-youdao</module>
     </modules>
 
 </project>

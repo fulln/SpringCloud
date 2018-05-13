@@ -1,4 +1,4 @@
-package com.fulln.config.util;
+package com.fulln.config.api;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

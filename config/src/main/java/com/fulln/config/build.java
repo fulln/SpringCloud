@@ -1,7 +1,7 @@
 package com.fulln.config;
 
 
-import com.fulln.config.util.GuavaCacheService;
+import com.fulln.config.api.GuavaCacheService;
 import com.google.common.cache.LoadingCache;
 
 public class build implements GuavaCacheService{
