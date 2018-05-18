@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.Properties;
+import java.util.*;
 
 
 public class fileUtil {
@@ -14,14 +14,14 @@ public class fileUtil {
     private static Logger logger = LoggerFactory.getLogger(fileUtil.class);
 
     static {
-        loadProps();
+        loadProps("application.properties");
     }
 
-    synchronized static private void loadProps() {
+    synchronized static private void loadProps(String name) {
         props = new Properties();
         InputStream in = null;
         try {
-            in =fileUtil.class.getClassLoader().getResourceAsStream("application.properties");
+            in =fileUtil.class.getClassLoader().getResourceAsStream(name);
             props.load(in);
         } catch (FileNotFoundException e) {
             logger.error("配置文件未找到");
@@ -38,9 +38,10 @@ public class fileUtil {
         }
     }
 
+    //获取单个key
     public static String getProperty(String key) {
         if (null == props) {
-            loadProps();
+            loadProps("application.properties");
         }
         if (key != null && !"".equals(key)) {
             return  props.getProperty(key);
@@ -48,6 +49,7 @@ public class fileUtil {
             return null;
         }
     }
+
 
     /**
      * 写入文件
@@ -65,6 +67,12 @@ public class fileUtil {
                 ps.close();
             }
         }
+    }
+
+    //获取全部的键值对
+    public static Properties getProps(String name) {
+        loadProps(name);
+        return props;
     }
 
 }

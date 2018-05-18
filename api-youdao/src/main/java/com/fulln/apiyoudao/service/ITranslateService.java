@@ -5,7 +5,7 @@ package com.fulln.apiyoudao.service;
  * @Description:
  * @Date : Created in  16:55  2018/5/13.
  */
-public interface TranslateService {
+public interface ITranslateService {
 
     String getTransback(String waitToTrans);
 }

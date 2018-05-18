@@ -8,7 +8,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 public class ApiYoudaoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApiYoudaoApplication.class, args);
-	}
+
+    public static void main(String[] args) {
+        SpringApplication.run(ApiYoudaoApplication.class, args);
+    }
+
+
 }
