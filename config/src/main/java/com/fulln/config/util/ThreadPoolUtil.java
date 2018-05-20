@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -42,19 +41,20 @@ public class ThreadPoolUtil {
 
         final CountDownLatch countDownLatch = new CountDownLatch( li.size() );//线程计数器
 
-        final List<ThreadEntity> Threadli = new ArrayList<ThreadEntity>();//查询的参数list  
+        final List<ThreadEntity> Threadli = new ArrayList<>();//查询的参数list
 
         Threadli.addAll(li);
 
         for (int i = 0; i < Threadli.size(); i++) {//开始开辟线程
-            //这里的部分 需要解耦合
+            //这里的部分 需要解耦合 当前是从springBean里面获取的
             final Object oc = ApplicationContextProvider.getBean(Threadli.get(i).getClazz());
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> map;
             List<Object> resultli = new ArrayList<>();
 
             Class<? extends Object> tgg = oc.getClass();
             Method[] me = tgg.getDeclaredMethods();
             String name = Threadli.get(i).getMethodName();
+
             map = Threadli.get(i).getCondition();
 
             for (Method method : me) {

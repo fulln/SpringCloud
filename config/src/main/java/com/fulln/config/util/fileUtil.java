@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.*;
+import java.util.Properties;
 
 
 public class fileUtil {
@@ -16,25 +16,29 @@ public class fileUtil {
     static {
         loadProps("application.properties");
     }
-
+    //读取配置文件
     synchronized static private void loadProps(String name) {
         props = new Properties();
-        InputStream in = null;
-        try {
-            in =fileUtil.class.getClassLoader().getResourceAsStream(name);
+        try (InputStream in =fileUtil.class.getClassLoader().getResourceAsStream(name)){
             props.load(in);
         } catch (FileNotFoundException e) {
             logger.error("配置文件未找到");
         } catch (IOException e) {
             logger.error("出现IOException");
-        } finally {
-            try {
-                if (null != in) {
-                    in.close();
-                }
-            } catch (IOException e) {
-                logger.error("配置文件流关闭出现异常");
-            }
+        }
+    }
+
+    //写入配置文件
+    synchronized static public void writeProps(Properties ps,String path) {
+        path=getLocalPath(path);
+        try (OutputStream out =   new FileOutputStream(path)){
+            ps.store(out,null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            logger.error("文件未找到");
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("文件输出流开启异常");
         }
     }
 
@@ -49,6 +53,11 @@ public class fileUtil {
             return null;
         }
     }
+    //封装资源路径
+    private static String getLocalPath(String path){
+        path=fileUtil.class.getClassLoader().getResource(path).getPath();
+        return path.replace("target/classes","src/main/resources");
+    }
 
 
     /**
@@ -58,6 +67,7 @@ public class fileUtil {
         PrintStream ps =null;
         try {
         File f= new File(FileName);
+
              ps = new PrintStream(new FileOutputStream(f),true);
             ps.println(sb);
         } catch (FileNotFoundException e) {

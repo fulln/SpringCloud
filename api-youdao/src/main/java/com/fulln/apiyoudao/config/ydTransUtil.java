@@ -1,13 +1,12 @@
-package com.fulln.apiyoudao.service.Impl;
+package com.fulln.apiyoudao.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.fulln.apiyoudao.Entity.youdaoTransVO;
-import com.fulln.apiyoudao.service.ITranslateService;
+import com.fulln.apiyoudao.service.Impl.TranslateServiceImpl;
 import com.fulln.config.util.httpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,11 +16,10 @@ import static com.fulln.config.util.MD5Util.md5;
 
 /**
  * @AUthor: fulln
- * @Description: 翻译api
- * @Date : Created in  16:11  2018/5/13.
+ * @Description: 不用springbean的方式进行翻译  翻译api接口
+ * @Date : Created in  14:54  2018/5/20.
  */
-@Service("translateService")
-public class TranslateServiceImpl implements ITranslateService {
+public  class ydTransUtil {
 
     private static Logger log = LoggerFactory.getLogger(TranslateServiceImpl.class);
 
@@ -34,7 +32,7 @@ public class TranslateServiceImpl implements ITranslateService {
     /**
      * 调取接口进行翻译
      */
-    public  String getTransback(String waitToTrans) {
+    public  static String getTrans(String waitToTrans) {
 
         String salt = String.valueOf(System.currentTimeMillis());
         String from = "zh-CHS";
@@ -51,6 +49,7 @@ public class TranslateServiceImpl implements ITranslateService {
 
         String Res = httpUtil.ClientPostRequest(uri, params);
         return TransTo(Res);
+
     }
 
 
@@ -60,5 +59,6 @@ public class TranslateServiceImpl implements ITranslateService {
         List<String> list =  youdao.getTranslation();
         return list.get(0);
     }
+
 
 }
