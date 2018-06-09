@@ -53,7 +53,8 @@ public class fileUtil {
             return null;
         }
     }
-    //封装资源路径
+
+    //封装资源路径 springmvc下运行
     private static String getLocalPath(String path){
         path=fileUtil.class.getClassLoader().getResource(path).getPath();
         return path.replace("target/classes","src/main/resources");

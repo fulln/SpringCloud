@@ -5,6 +5,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.fulln.apiyoudao.Entity.youdaoTransVO;
 import com.fulln.apiyoudao.service.Impl.TranslateServiceImpl;
 import com.fulln.config.util.httpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +20,8 @@ import static com.fulln.config.util.MD5Util.md5;
  * @Description: 不用springbean的方式进行翻译  翻译api接口
  * @Date : Created in  14:54  2018/5/20.
  */
+@Slf4j
 public  class ydTransUtil {
-
-    private static Logger log = LoggerFactory.getLogger(TranslateServiceImpl.class);
 
     private static final String appkey = "36fbdeb54e581879"; //产品id
 

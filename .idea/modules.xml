@@ -13,8 +13,10 @@
       <module fileurl="file://$PROJECT_DIR$/eurekaMasters/eureka_slaver2/eureka_slaver2.iml" filepath="$PROJECT_DIR$/eurekaMasters/eureka_slaver2/eureka_slaver2.iml" />
       <module fileurl="file://$PROJECT_DIR$/pips/pips.iml" filepath="$PROJECT_DIR$/pips/pips.iml" />
       <module fileurl="file://$PROJECT_DIR$/provider/provider.iml" filepath="$PROJECT_DIR$/provider/provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/security/security.iml" filepath="$PROJECT_DIR$/security/security.iml" />
       <module fileurl="file://$PROJECT_DIR$/springCloud.iml" filepath="$PROJECT_DIR$/springCloud.iml" />
       <module fileurl="file://$PROJECT_DIR$/turbine/turbine.iml" filepath="$PROJECT_DIR$/turbine/turbine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webflux/webflux.iml" filepath="$PROJECT_DIR$/webflux/webflux.iml" />
     </modules>
   </component>
 </project>

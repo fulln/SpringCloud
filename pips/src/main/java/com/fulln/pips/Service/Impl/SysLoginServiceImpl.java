@@ -26,7 +26,6 @@ public class SysLoginServiceImpl implements ISysLoginService {
     @Override
     public GlobalResult findAll(userEmpEntity u ){
 //        try{
-            int i=5/0;
             PageHelper.startPage(u.getPageNo(),u.getPageSize());
             List<userEmpEntity> li= sysLoginDao.select(u);
             return getSuccessResult(new PageInfo<>(li),"查询成功");

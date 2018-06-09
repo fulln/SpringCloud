@@ -2,6 +2,7 @@ package com.fulln.config.util;
 
 import com.fulln.config.entity.ApplicationContextProvider;
 import com.fulln.config.entity.ThreadEntity;
+import com.fulln.config.entity.reflectEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,7 @@ public class ThreadPoolUtil {
         }
     };
 
-    private  List<ThreadEntity> li = new ArrayList<>();//查询的参数list
+    private  List<reflectEntity> li = new ArrayList<>();//查询的参数list
 
     private Method refle;
 
@@ -41,7 +42,7 @@ public class ThreadPoolUtil {
 
         final CountDownLatch countDownLatch = new CountDownLatch( li.size() );//线程计数器
 
-        final List<ThreadEntity> Threadli = new ArrayList<>();//查询的参数list
+        final List<reflectEntity> Threadli = new ArrayList<>();//查询的参数list
 
         Threadli.addAll(li);
 
@@ -122,7 +123,7 @@ public class ThreadPoolUtil {
         this.refle = refle;
     }
 
-    public List<ThreadEntity> getLi() {
+    public List<reflectEntity> getLi() {
         return li;
     }
 }  

@@ -2,6 +2,7 @@ package com.fulln.apiyoudao.config;
 
 import com.fulln.apiyoudao.Exception.YDtranslateException;
 import com.fulln.config.util.fileUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,10 +19,11 @@ import java.util.Properties;
  * @Date : Created in  13:43  2018/5/20.
  */
 @Component
+@Slf4j
 public class ReadPorpertis {
 
-    private static Logger log = LoggerFactory.getLogger(ReadPorpertis.class);
-
+//    private static Logger log = LoggerFactory.getLogger(ReadPorpertis.class);
+//
     private static String readFile;
 
     private static String writeFile;
@@ -36,17 +38,25 @@ public class ReadPorpertis {
     @SuppressWarnings("unchecked")
     public void writeToFile() {
         Properties penp = fileUtil.getProps(writeFile);
+        Properties pznp = fileUtil.getProps(readFile);
         rmThreadPoolUtil rm = new rmThreadPoolUtil(); //调用线程池
         try {
             Map map = ReadFromFile();
             /**
-             * 用线程池不要装逼用反射
+             * 用线程池
              */
             Map ResultMap = rm.getStart(map);
-            ResultMap.forEach((k, v) -> {
-                penp.setProperty(k.toString(), v.toString());
-                System.out.println("翻译的内容为:"+k+" 结果是"+v);
+            pznp.forEach((k2, v2) -> {
+                ResultMap.forEach((k, v) -> {
+                    if (k.equals(k2)) {
+                        penp.setProperty(k.toString(), v.toString());
+                        System.out.println("翻译的内容为:" + k + " 结果是" + v);
+                    }
+                });
+
+
             });
+
             fileUtil.writeProps(penp, writeFile);
         } catch (YDtranslateException e) {
             e.printStackTrace();
@@ -74,7 +84,7 @@ public class ReadPorpertis {
             }
             if (map.size() > 0) {
                 return map;
-            }else{
+            } else {
                 throw new YDtranslateException("文件中没有未翻译过的字段");
             }
         }
@@ -83,6 +93,7 @@ public class ReadPorpertis {
 
     @Value("${readFile.path}")
     public void setReadFile(String readFile) {
+
         ReadPorpertis.readFile = readFile;
     }
 

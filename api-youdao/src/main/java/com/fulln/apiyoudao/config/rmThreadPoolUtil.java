@@ -1,6 +1,7 @@
 package com.fulln.apiyoudao.config;
 
 import com.fulln.apiyoudao.Exception.YDtranslateException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,9 +16,8 @@ import java.util.concurrent.Executors;
  * @Description:翻译缓存线程池
  * @Date: Created in 2018/5/18 0018
  */
+@Slf4j
 public class rmThreadPoolUtil {
-
-    private static Logger log = LoggerFactory.getLogger(rmThreadPoolUtil.class);
 
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);//设置最大并发为5条
 
