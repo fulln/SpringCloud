@@ -56,4 +56,8 @@ public class userEmpEntity extends BaseEntity {
     public void setPermission(CommonEnum.BasicEntityEnum permission) {
         this.permission = permission;
     }
+
+    public userEmpEntity(Integer id) {
+        this.id = id;
+    }
 }

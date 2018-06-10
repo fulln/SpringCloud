@@ -23,6 +23,12 @@
         <spring-cloud.version>Finchley.BUILD-SNAPSHOT</spring-cloud.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -46,6 +52,7 @@
         <module>api-gateway</module>
         <module>api-youdao</module>
         <module>security</module>
+        <module>webflux</module>
     </modules>
 
 </project>

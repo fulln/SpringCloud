@@ -3,10 +3,7 @@ package com.fulln.pips.Common.AopScanner;
 
 import com.fulln.pips.Common.BaseResult.GlobalResult;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -43,6 +40,7 @@ public class AspectScan {
             return getfaultResult("系统异常！");
         }
     }
+
 
     @Pointcut("@within(org.springframework.stereotype.Service) && execution(* com.fulln.pips.Service.*.*(..))")
     public void gethandle() {

@@ -3,14 +3,17 @@ package com.fulln.config.util;
 import com.fulln.config.api.getAbstractClass;
 import com.fulln.config.entity.ApplicationContextProvider;
 import com.fulln.config.entity.reflectEntity;
+import com.fulln.config.entity.refletMapEntity;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 1.如果要是写多线程查询的话肯定是在逻辑层进行操作.
@@ -37,6 +40,9 @@ public class reflectUtil implements getAbstractClass {
         setPrepareClass(t);
     }
 
+    public static   reflectUtil setReflectUtil(Class t){
+        return   new reflectUtil(t);
+    }
     /**
      * 将传入的类封装成一个list实体(查找类)
      * <p>
@@ -45,11 +51,11 @@ public class reflectUtil implements getAbstractClass {
      * 3.获取当前参数
      * Map<String,list>  将方法名称和当前的参数组成map的形式传递
      */
-    private void getThreadEntity(Class t, Map<String,List<Object>> map) {
+    private void getThreadEntity(Class t, List<refletMapEntity> reflist) {
 
-        if(map.size() == 0){
-            log.error("map中的值为空");
-            throw new NullPointerException("map不能为空");
+        if(reflist.size() == 0){
+            log.error("参数中的值为空");
+            throw new NullPointerException("参数和方法为空");
         }
 
         List<Field> fieldList = Arrays.asList(t.getClass().getDeclaredFields());
@@ -66,15 +72,15 @@ public class reflectUtil implements getAbstractClass {
 
                                 List<Method> lis = Arrays.asList(oc.getClass().getDeclaredMethods());
                                 lis.forEach(li -> {
-                                    map.forEach((k,v) ->{
-                                        if (li.getName().equals(k)) {
+
+                                    reflist.forEach(m ->{
+                                        if (li.getName().equals(m.getMethodName())) {
                                             //传入方法名称和参数
                                             reflectEntity reflect = new reflectEntity();
                                             reflect.setClazz(getThisClazz(name));
-                                            reflect.setMethodName(k);
-                                            reflect.setCondition(v);
+                                            reflect.setMethodName(m.getMethodName());
+                                            reflect.setCondition(m.getParams());
                                             reflectList.add(reflect);
-
                                         }
                                     });
 
@@ -91,10 +97,10 @@ public class reflectUtil implements getAbstractClass {
     /**
      * 在service中调用
      *
-     * @param map
+     * @param list
      */
-    public void init(Map<String,List<Object>> map) {
-        getThreadEntity(getPrepareClass(),map);
+    public void init(List<refletMapEntity> list) {
+        getThreadEntity(getPrepareClass(),list);
         loopMethod();
     }
 
@@ -118,7 +124,7 @@ public class reflectUtil implements getAbstractClass {
             for (Method method :
                     refmethod) {
 
-                if (name != null && method.getName().equals(name)) {
+                if (method.getName().equals(name)) {
                     if (!method.isAccessible()) { //判断是不是公共方法
                         method.setAccessible(true);
                     }
