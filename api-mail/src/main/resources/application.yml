@@ -1,0 +1,15 @@
+stmp:
+  host: smtp.qq.com
+  account: 245193247@qq.com
+  password: ctawiqdmetbwbghh
+mail:
+  filePath: D:\worksp\SpringCloud\config\table.xlsx
+  smtp:
+    auth: true
+    timeout: 25000
+multipart:
+  enabled: true
+  max-file-size: 50mb
+  max-request-size: 50mb
+server:
+  port: 8080
