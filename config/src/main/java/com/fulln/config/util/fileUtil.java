@@ -18,7 +18,7 @@ public class fileUtil {
     }
     //读取配置文件
     synchronized static private void loadProps(String name) {
-        props = new Properties();
+        props = new OrderdProperties();
         try (InputStream in =fileUtil.class.getClassLoader().getResourceAsStream(name)){
             props.load(in);
         } catch (FileNotFoundException e) {

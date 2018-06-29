@@ -18,10 +18,10 @@ import java.util.concurrent.Executors;
  */
 @Slf4j
 public class rmThreadPoolUtil {
-
-    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);//设置最大并发为5条
-
-    private ConcurrentHashMap syncMap = new ConcurrentHashMap<String, String>();// 线程安全的map
+    //设置最大并发为5条
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);
+    // 线程安全的map
+    private ConcurrentHashMap syncMap = new ConcurrentHashMap<String, String>();
 
 
 //    @Resource

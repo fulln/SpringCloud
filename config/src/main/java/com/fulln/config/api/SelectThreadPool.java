@@ -23,32 +23,32 @@ public interface SelectThreadPool {
 
     List<refletMapEntity> setRefList();
 
-    default void setAllTothisList(Class T){
-        reflectUtil rc  = setReflectUtil(T);
-        rc.init(setRefList());
-        List<reflectEntity> li =   rc.getReflectList();
-        ExecPoolUtil execPoolUtil =new ExecPoolUtil() {
-            @Override
-            public Object finishRun() {
-                li.forEach(list ->{
-                    if(list.getMethod().getReturnType().getName().lastIndexOf("void") !=-1){
-                        rc.getNoneByName(list);
-
-                    }else{
-                         rc.getResultByName(list);
-                    }
-                });
-                return null;
-            }
-        };
-        List<Future<Object>> futureList =  execPoolUtil.getReturnBack();
-        futureList.forEach(flist ->{
-
-
-
-        });
-
-
-    }
+//    default void setAllTothisList(Class T){
+//        reflectUtil rc  = setReflectUtil(T);
+//        rc.init(setRefList());
+//        List<reflectEntity> li =   rc.getReflectList();
+//        ExecPoolUtil execPoolUtil =new ExecPoolUtil() {
+//            @Override
+//            public Object finishRun() {
+//                li.forEach(list ->{
+//                    if(list.getMethod().getReturnType().getName().lastIndexOf("void") !=-1){
+//                        rc.getNoneByName(list);
+//
+//                    }else{
+//                         rc.getResultByName(list);
+//                    }
+//                });
+//                return null;
+//            }
+//        };
+//        List<Future<Object>> futureList =  execPoolUtil.getReturnBack();
+//        futureList.forEach(flist ->{
+//
+//
+//
+//        });
+//
+//
+//    }
 
 }

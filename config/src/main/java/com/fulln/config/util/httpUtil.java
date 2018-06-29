@@ -1,5 +1,6 @@
 package com.fulln.config.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.ParseException;
@@ -37,9 +38,10 @@ import java.util.Map.Entry;
  * @Description: http工具类
  * @Date : Created in  12:50  2018/5/12.
  */
+@Slf4j
 public class httpUtil {
 
-    private static final Logger log = LoggerFactory.getLogger(httpUtil.class);
+
 
     private static final String USER_AGENT = "Mozilla/5.0";
 

@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class refletMapEntity {
 
-    private String MethodName;
+    private String methodName;
 
     private List<Object> params;
 

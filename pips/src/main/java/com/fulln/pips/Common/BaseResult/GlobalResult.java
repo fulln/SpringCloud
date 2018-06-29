@@ -16,13 +16,29 @@ public class GlobalResult {
 
     private String  message;
 
+    private Integer code;
+
+    private String Umessage;
+
     private Object datas;
 
-    private PageInfo datas2;
+    public Integer getCode() {
+        return code;
+    }
 
+    public void setCode(Integer code) {
+        this.code = code;
+    }
 
+    public String getUmessage() {
+        return Umessage;
+    }
 
-    public Boolean getResultSuccess() {
+    public void setUmessage(String umessage) {
+        Umessage = umessage;
+    }
+
+    public Boolean getResultSuccess(Boolean ok) {
         return ResultSuccess;
     }
 
@@ -46,77 +62,13 @@ public class GlobalResult {
         this.datas = datas;
     }
 
-    public PageInfo getDatas2() {
-        return datas2;
-    }
-
-    public void setDatas2(PageInfo datas2) {
-        this.datas2 = datas2;
-    }
-
-    public GlobalResult(Boolean resultSuccess, String message, Object datas) {
+    GlobalResult(Boolean resultSuccess, String message, Object datas) {
         ResultSuccess = resultSuccess;
         this.message = message;
         this.datas = datas;
     }
 
-    public GlobalResult(Boolean resultSuccess, String message,PageInfo datas2) {
-        ResultSuccess = resultSuccess;
-        this.message = message;
-        this.datas2 = datas2;
-    }
-
     public GlobalResult() {
-    }
-
-    //success
-    public static  GlobalResult getSuccessResult(Object data) {
-
-        return getSuccessResult(data, null);
 
     }
-
-    //success with list
-    public static  GlobalResult getSuccessResult(PageInfo data) {
-
-        return getSuccessResult(data, null);
-
-    }
-
-    //success only message
-    public static  GlobalResult getSuccessResult(String message) {
-
-        return getSuccessResult(null, message);
-
-    }
-
-    //success with message and data
-    public static GlobalResult getSuccessResult(Object data, String Message) {
-
-        return new  GlobalResult(true, Message, data);
-
-    }
-
-    // success with list
-    public static GlobalResult getSuccessResult(PageInfo data, String Message) {
-
-        return new  GlobalResult(true, Message, data);
-
-    }
-
-    //fault with code
-    public static GlobalResult getfaultResult(Exception e) {
-
-        return getfaultResult(e.getMessage());
-
-    }
-
-    //fault only message
-    public static  GlobalResult getfaultResult(String Message) {
-
-        return new  GlobalResult(false, Message, null);
-
-    }
-
-
 }

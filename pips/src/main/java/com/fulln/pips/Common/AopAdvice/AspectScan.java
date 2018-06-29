@@ -1,19 +1,22 @@
-package com.fulln.pips.Common.AopScanner;
+package com.fulln.pips.Common.AopAdvice;
 
 
 import com.fulln.pips.Common.BaseResult.GlobalResult;
+import com.fulln.pips.Common.Exception.CustomException;
+import com.fulln.pips.Common.util.ExceptionEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static com.fulln.pips.Common.BaseResult.GlobalResult.getfaultResult;
 
 
 /**
@@ -23,11 +26,11 @@ import static com.fulln.pips.Common.BaseResult.GlobalResult.getfaultResult;
  */
 @Aspect
 @Component
+@Slf4j
 public class AspectScan {
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
-
-    @AfterThrowing(pointcut = "gethandle()", throwing = "e")
+    //AfterThrowing异常发生后能执行的方法  但是他并不能阻止异常的抛出或者处理
+    /*@AfterThrowing(pointcut = "gethandle()", throwing = "e")
     public GlobalResult AfterThrows(JoinPoint jp, Throwable e) {
         log.error("ExceptionHandler : ", e);
         if (e instanceof IllegalArgumentException) {
@@ -39,7 +42,7 @@ public class AspectScan {
         } else {
             return getfaultResult("系统异常！");
         }
-    }
+    }*/
 
 
     @Pointcut("@within(org.springframework.stereotype.Service) && execution(* com.fulln.pips.Service.*.*(..))")
@@ -66,11 +69,34 @@ public class AspectScan {
         if (queryString != null) {
             requestURL.append("?").append(queryString);
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("收到请求!!!\r\n");
-        sb.append("   请求URL：" + requestURL + "\r\n");
-        sb.append("   接口方法：" + entity + "." + methodName + "\r\n");
+        sb.append("   请求URL：").append(requestURL).append("\r\n");
+        sb.append("   接口方法：").append(entity).append(".").append(methodName).append("\r\n");
         log.info(sb.toString());
+    }
+
+    @Around("gethandle()")
+    public GlobalResult aroundService(ProceedingJoinPoint pJoinPoint ){
+        GlobalResult result = new GlobalResult();
+        try {
+            result = (GlobalResult) pJoinPoint.proceed();
+        } catch (CustomException e){
+            log.error("[aop]系统异常",e);
+            result = ExceptionEnum.SYS_ERROR.globalResult();
+        } catch (Throwable e) {
+            log.error("ExceptionHandler : ", e);
+            if (e instanceof IllegalArgumentException) {
+                result.setMessage(e.getMessage());
+            } else if (e instanceof NullPointerException) {
+                result.setMessage(e.getMessage());
+            } else if (e instanceof BadSqlGrammarException) {
+                result.setMessage("内部错误！请联系管理员！");
+            } else {
+                result.setMessage("系统异常！");
+            }
+        }
+        return  result;
     }
 
 

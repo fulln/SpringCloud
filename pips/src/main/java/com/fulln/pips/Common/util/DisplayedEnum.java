@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 
 public interface DisplayedEnum {
 
-    String DEFAULT_VALUE_NAME = "value";
+    String DEFAULT_VALUE_NAME = "code";
 
     String DEFAULT_LABEL_NAME = "label";
 
@@ -36,17 +36,17 @@ public interface DisplayedEnum {
         }
     }
 
-    static <T extends Enum<T>> T valueOfEnum(Class<T> enumClass, Integer value) {
-        if (value == null)
+    static <T extends Enum<T>> T valueOfEnum(Class<T> enumClass, Integer code) {
+        if (code == null)
             throw  new IllegalArgumentException("DisplayedEnum value should not be null");
         if (enumClass.isAssignableFrom(DisplayedEnum.class))
             throw new IllegalArgumentException("illegal DisplayedEnum type");
         T[] enums = enumClass.getEnumConstants();
         for (T t: enums) {
             DisplayedEnum displayedEnum = (DisplayedEnum)t;
-            if (displayedEnum.getValue().equals(value))
+            if (displayedEnum.getValue().equals(code))
                 return (T) displayedEnum;
         }
-        throw new IllegalArgumentException("cannot parse integer: " + value + " to " + enumClass.getName());
+        throw new IllegalArgumentException("cannot parse integer: " + code + " to " + enumClass.getName());
     }
 }

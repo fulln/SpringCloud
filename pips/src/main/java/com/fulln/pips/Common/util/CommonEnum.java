@@ -8,13 +8,14 @@ public class CommonEnum {
         FMALE(2, "女"),Custom(3,"客户"),Host(4,"主要人员");
 
         //用于保存在数据库
-        private Integer value;
+        private Integer code;
         //用于UI展示
         private String label;
 
-        BasicEntityEnum(int value, String label){
-            this.value = value;
+        BasicEntityEnum(int code, String label){
+            this.code = code;
             this.label = label;
         }
     }
+
 }

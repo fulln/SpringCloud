@@ -57,7 +57,8 @@ public class userEmpEntity extends BaseEntity {
         this.permission = permission;
     }
 
-    public userEmpEntity(Integer id) {
-        this.id = id;
+    public userEmpEntity() {
+
     }
+
 }

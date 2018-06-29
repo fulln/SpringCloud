@@ -22,8 +22,7 @@ import java.util.Properties;
 @Slf4j
 public class ReadPorpertis {
 
-//    private static Logger log = LoggerFactory.getLogger(ReadPorpertis.class);
-//
+
     private static String readFile;
 
     private static String writeFile;
@@ -39,24 +38,22 @@ public class ReadPorpertis {
     public void writeToFile() {
         Properties penp = fileUtil.getProps(writeFile);
         Properties pznp = fileUtil.getProps(readFile);
-        rmThreadPoolUtil rm = new rmThreadPoolUtil(); //调用线程池
+        //调用线程池
+        rmThreadPoolUtil rm = new rmThreadPoolUtil();
         try {
             Map map = ReadFromFile();
             /**
              * 用线程池
              */
             Map ResultMap = rm.getStart(map);
-            pznp.forEach((k2, v2) -> {
+            pznp.keySet().forEach((k2) -> {
                 ResultMap.forEach((k, v) -> {
                     if (k.equals(k2)) {
                         penp.setProperty(k.toString(), v.toString());
                         System.out.println("翻译的内容为:" + k + " 结果是" + v);
                     }
                 });
-
-
             });
-
             fileUtil.writeProps(penp, writeFile);
         } catch (YDtranslateException e) {
             e.printStackTrace();
@@ -70,13 +67,14 @@ public class ReadPorpertis {
     private Map ReadFromFile() throws YDtranslateException {
         Properties penp = fileUtil.getProps(writeFile);
         Properties pznp = fileUtil.getProps(readFile);
-        Map<Object, Object> map = new HashMap<>(); //要进行翻译的map
+        //要进行翻译的map
+        Map<Object, Object> map = new HashMap<>();
         if (0 != pznp.size()) {
             if (penp.size() != 0) {
                 //遍历中文 文件中的键值对
-                pznp.forEach((k, v) -> {
+                pznp.forEach((k,v)->{
                     if (!penp.keySet().contains(k)) {
-                        map.put(k, v);
+                        map.put(k,v);
                     }
                 });
             } else {

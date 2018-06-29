@@ -3,6 +3,8 @@ package com.fulln.config.util;
 import com.fulln.config.entity.ApplicationContextProvider;
 import com.fulln.config.entity.ThreadEntity;
 import com.fulln.config.entity.reflectEntity;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,27 +15,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-/* 类名称：ThreadPoolUtil
+/** 类名称：ThreadPoolUtil
  * 类描述：线程池查询
  * 创建人：fulln
  * 创建时间：2018年1月25日 下午7:15:22
  * @version
- *
  */
+@Slf4j
 public class ThreadPoolUtil {
 
-    //日志文件
-    private static final Logger log = LoggerFactory.getLogger(ThreadPoolUtil.class);
 
-    //开启基本的线程池 可以使用cachethreadpool
-    private ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 8, 3000, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(2000)) {
+    private ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+            .setNameFormat("config-pool-%d").build();
+
+
+
+    private ExecutorService executor =  new ThreadPoolExecutor(5, 8, 3000,TimeUnit.SECONDS, new LinkedBlockingQueue<>(1024),namedThreadFactory){
+        @Override
         protected void afterExecute(Runnable r, Throwable t) {
             super.afterExecute(r, t);
             printException(r, t);
         }
     };
 
-    private  List<reflectEntity> li = new ArrayList<>();//查询的参数list
+
+    //查询的参数list
+    private  List<reflectEntity> li = new ArrayList<>();
 
     private Method refle;
 
@@ -101,8 +108,9 @@ public class ThreadPoolUtil {
         if (t == null && r instanceof Future<?>) {
             try {
                 Future<?> future = (Future<?>) r;
-                if (future.isDone())
+                if (future.isDone()){
                     future.get();
+                }
             } catch (CancellationException ce) {
                 t = ce;
             } catch (ExecutionException ee) {
@@ -111,8 +119,9 @@ public class ThreadPoolUtil {
                 Thread.currentThread().interrupt(); // ignore/reset
             }
         }
-        if (t != null)
+        if (t != null){
             log.error(t.getMessage(), t);
+        }
     }
 
     public Method getRefle() {
