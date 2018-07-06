@@ -1,9 +1,19 @@
 package com.fulln.apimail.entity;
 
-public class EmailEntity {
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * 邮件entity
+ * @author Administrator
+ */
+public class EmailEntity implements Serializable {
+
+    private static final long serialVersionUID = 1785196060454970354L;
+
 
     /**
-     * 收件人
+     * 收件人 (多人以,隔开)
      */
 	private String receiver;
     /**
@@ -14,32 +24,69 @@ public class EmailEntity {
      * 模板
      */
     private String text;
+    /**
+     * 添加抄送人 (多人以,隔开)
+     */
+    private String ccUser;
+    /**
+     * 密送人(多人以,隔开)
+     */
+    private String bccUser;
+    /**
+     * 附件地址
+     */
+    private String[] attachment;
 
     /**
-     * 地址 (图片或者文件或者其他)
+     * 邮件中发送的照片地址
      */
-    private String path;
-
+    private String imgPath;
     /**
-     * 判断是图片还是附件还是网页
+     * excel的处理类
      */
-    private Integer flag;
+    private List<ExcelEntity> excelEntityList;
 
 
-    public String getPath() {
-        return path;
+    public String getImgPath() {
+        return imgPath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 
-    public Integer getFlag() {
-        return flag;
+    public String getCcUser() {
+        return ccUser;
     }
 
-    public void setFlag(Integer flag) {
-        this.flag = flag;
+    public void setCcUser(String ccUser) {
+        this.ccUser = ccUser;
+    }
+
+    public String getBccUser() {
+        return bccUser;
+    }
+
+    public void setBccUser(String bccUser) {
+        this.bccUser = bccUser;
+    }
+
+    public String[] getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String[] attachment) {
+        this.attachment = attachment;
+    }
+
+
+
+    public List<ExcelEntity> getExcelEntityList() {
+        return excelEntityList;
+    }
+
+    public void setExcelEntityList(List<ExcelEntity> excelEntityList) {
+        this.excelEntityList = excelEntityList;
     }
 
     public String getReceiver() {
