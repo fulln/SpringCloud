@@ -1,10 +1,6 @@
 package com.fulln.pips.Common.BaseResult;
 
 
-import com.github.pagehelper.PageInfo;
-
-import java.util.List;
-
 /**
  * @Author: fulln
  * @Description: 通用当前返回结果
@@ -12,13 +8,13 @@ import java.util.List;
  */
 public class GlobalResult {
 
-    private Boolean ResultSuccess;
+    private Boolean resultsuccess;
 
     private String  message;
 
     private Integer code;
 
-    private String Umessage;
+    private String umessage;
 
     private Object datas;
 
@@ -31,19 +27,19 @@ public class GlobalResult {
     }
 
     public String getUmessage() {
-        return Umessage;
+        return umessage;
     }
 
     public void setUmessage(String umessage) {
-        Umessage = umessage;
+        this.umessage = umessage;
     }
 
     public Boolean getResultSuccess(Boolean ok) {
-        return ResultSuccess;
+        return resultsuccess;
     }
 
     public void setResultSuccess(Boolean resultSuccess) {
-        ResultSuccess = resultSuccess;
+        this.resultsuccess = resultSuccess;
     }
 
     public String getMessage() {
@@ -63,7 +59,7 @@ public class GlobalResult {
     }
 
     GlobalResult(Boolean resultSuccess, String message, Object datas) {
-        ResultSuccess = resultSuccess;
+        this.resultsuccess = resultSuccess;
         this.message = message;
         this.datas = datas;
     }

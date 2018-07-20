@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.fulln.apimail.baseResult.GlobalResult;
 import com.fulln.apimail.entity.EmailEntity;
 import com.fulln.apimail.entity.ExcelEntity;
-import com.fulln.apimail.entity.UserCell;
 import com.fulln.apimail.enums.ExceptionEnum;
 import com.fulln.apimail.service.MailService;
 import com.fulln.apimail.utils.ExcelUtils;
@@ -12,8 +11,10 @@ import com.fulln.apimail.utils.FileUtils;
 import com.fulln.apimail.utils.PicUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,7 +23,8 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -34,6 +36,8 @@ import java.util.*;
 @Service("MailService")
 @Slf4j
 public class MailServiceImpl implements MailService {
+
+
 
     @Value("${stmp.host}")
     private String host;
@@ -58,6 +62,8 @@ public class MailServiceImpl implements MailService {
      */
     @Override
     public GlobalResult sendHtmlMail(EmailEntity email) {
+
+
 
         JavaMailSenderImpl sender = getMailSender();
         // 建立邮件消息,发送简单邮件和html邮件的区别
@@ -96,8 +102,6 @@ public class MailServiceImpl implements MailService {
             messageHelper.setSentDate(new Date());
 
 
-
-
             //添加附件
             if (email.getAttachment() != null && email.getAttachment().length != 0) {
 
@@ -111,7 +115,7 @@ public class MailServiceImpl implements MailService {
             }
             // true 表示启动HTML格式的邮件 发送正文
             messageHelper.setText(
-                    "<html><head></head><body>"+
+                    "<html><head></head><body>" +
                             email.getText()
                             + "<img src=\"cid:pic\">"
                             + "</body></html>"
@@ -153,12 +157,12 @@ public class MailServiceImpl implements MailService {
             //默认的是从json文件中获取当前需要更改的部分
 
             String value = FileUtils.readFromJSON("excelChange.json");
-            if(value != null){
-                email.setExcelEntityList(JSON.parseArray(value,ExcelEntity.class));
+            if (value != null) {
+                email.setExcelEntityList(JSON.parseArray(value, ExcelEntity.class));
             }
 
             FileUtils fileUtils = new FileUtils("application.properties");
-            String name= fileUtils.getProperty("mail.filePath");
+            String name = fileUtils.getProperty("mail.filePath");
 
 
             email.setAttachment(new String[]{ExcelUtils.updateExcels(name, email.getExcelEntityList())});
