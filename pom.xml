@@ -29,6 +29,7 @@
             <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -53,6 +54,9 @@
         <module>api-youdao</module>
         <module>security</module>
         <module>webflux</module>
+        <module>webflux-paradigm</module>
+        <module>stream-recevier</module>
+        <module>stream-sender</module>
     </modules>
 
 </project>

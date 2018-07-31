@@ -250,7 +250,7 @@ public class httpUtil {
 
 
     /**
-     * 用httpClient  post请求 https  登录 基于cookie 基于证书  返回页面
+     * 用httpClient  post请求 http  登录 基于cookie 基于证书  返回页面
      */
     public static String ClientPostFullRequest(String url, String userName, String pass) {
         CredentialsProvider credsProvider = new BasicCredentialsProvider();

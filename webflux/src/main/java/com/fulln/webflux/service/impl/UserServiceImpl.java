@@ -1,7 +1,7 @@
-package com.fulln.webflux.Service.Impl;
+package com.fulln.webflux.service.impl;
 
-import com.fulln.webflux.POJO.User;
-import com.fulln.webflux.Service.UserService;
+import com.fulln.webflux.pojo.User;
+import com.fulln.webflux.service.UserService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

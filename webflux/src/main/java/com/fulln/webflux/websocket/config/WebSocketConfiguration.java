@@ -1,6 +1,6 @@
-package com.fulln.webflux.config;
+package com.fulln.webflux.websocket.config;
 
-import com.fulln.webflux.controller.EchoHandle;
+import com.fulln.webflux.websocket.EchoHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ public class WebSocketConfiguration {
     @Autowired
     @Bean
     public HandlerMapping webSocketMapping(final EchoHandle echoHandle){
-        final Map<String,WebSocketHandler> map =  new HashMap<>();
+        final Map<String,WebSocketHandler> map =  new HashMap<>(1);
         map.put("/echo",echoHandle);
         final SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
         mapping.setOrder(Ordered.HIGHEST_PRECEDENCE);

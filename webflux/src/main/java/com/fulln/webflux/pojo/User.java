@@ -1,4 +1,4 @@
-package com.fulln.webflux.POJO;
+package com.fulln.webflux.pojo;
 
 /**
  * @Author: fulln

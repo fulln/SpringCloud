@@ -1,6 +1,6 @@
-package com.fulln.webflux.Service;
+package com.fulln.webflux.service;
 
-import com.fulln.webflux.POJO.User;
+import com.fulln.webflux.pojo.User;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
