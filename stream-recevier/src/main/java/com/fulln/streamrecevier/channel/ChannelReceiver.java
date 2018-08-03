@@ -1,6 +1,8 @@
 package com.fulln.streamrecevier.channel;
 
 import org.springframework.cloud.stream.annotation.Input;
+import org.springframework.cloud.stream.annotation.Output;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 
 /**
@@ -12,9 +14,33 @@ import org.springframework.messaging.SubscribableChannel;
  **/
 public interface  ChannelReceiver {
 
+    String OUTPUT1_CHANNEL="OutPut-1";
+    String OUTPUT2_CHANNEL="OutPut-2";
+
+    String REPLAY_SINK_CHANNEL = "replay-sink-channel";
+    String REPLAY_SOURCE_CHANNEL = "replay-source-channel";
+
+    @Input(REPLAY_SOURCE_CHANNEL)
+    SubscribableChannel replayInput();
+
+    @Output(REPLAY_SINK_CHANNEL)
+    MessageChannel replayOutput();
+
+
+    /**
+     * 原生通道
+     */
+    String ORIGINAL_CHANNEL = "original-channel";
+
     String CHANNEL = "thisInput";
 
-    @Input(ChannelReceiver.CHANNEL)
+    @Input(CHANNEL)
     SubscribableChannel input();
+
+    @Input(OUTPUT1_CHANNEL)
+    SubscribableChannel  input1();
+
+    @Input(OUTPUT2_CHANNEL)
+    SubscribableChannel input2();
 
 }

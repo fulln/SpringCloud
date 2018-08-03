@@ -1,52 +1,67 @@
 package com.fulln.streamrecevier;
 
 import com.fulln.streamrecevier.channel.ChannelReceiver;
+import com.fulln.streamrecevier.entity.UserEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Output;
-import org.springframework.cloud.stream.messaging.Sink;
-
-
-import org.springframework.context.MessageSource;
-import org.springframework.messaging.Message;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
-
-
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 
 
+/**
+ * @program: SpringCloud
+ * @description: 测试类
+ * @author: fulln
+ * @create: 2018-08-01 14:48
+ * @Version： 0.0.1
+ **/
+
 @RunWith(SpringRunner.class)
-@EnableBinding(value = {ReceiverAppTest.SinkSender.class,MySinkSender.class})
+@EnableBinding(value = {ReceiverAppTest.MyOutputSource.class})
 public class ReceiverAppTest {
 
-    @Autowired
-    private SinkSender sinkSender;
 
-    @Resource
-    private MySinkSender mySinkSender;
+    @Resource(name = ChannelReceiver.OUTPUT1_CHANNEL)
+    private MessageChannel send1;
 
+    @Resource(name = ChannelReceiver.OUTPUT2_CHANNEL)
+    private MessageChannel send2;
+
+    @Resource(name = ChannelReceiver.CHANNEL)
+    private MessageChannel Send3;
 
     @Test
-    public void sinkSenderTester() {
-//        sinkSender.output().send(MessageBuilder.withPayload("produce a message to  channel").build());
-        Message message = MessageBuilder.withPayload("produce a message to " + ChannelReceiver.CHANNEL + " channel").build();
-        System.err.println(message);
-        mySinkSender.output().send(message);
+    public void myOutputSourceTester() {
+
+//        send1.send(MessageBuilder.withPayload("produce a message to " + ChannelReceiver.OUTPUT1_CHANNEL + " channel").build());
+//
+//        send2.send(MessageBuilder.withPayload("produce a message to " + ChannelReceiver.OUTPUT2_CHANNEL + " channel").build());
+
+        UserEntity entity = new UserEntity();
+        entity.setUserName("fulln");
+
+        Send3.send(MessageBuilder.withPayload(entity)
+                .setHeader("name", "lee")
+                .build());
+//        Send3.send(MessageBuilder.withPayload(JSON.toJSONString(entity)).build());
     }
 
 
-    public interface SinkSender {
+    public interface MyOutputSource {
 
-        @Output(Sink.INPUT)
-        MessageChannel output();
+        @Output(ChannelReceiver.OUTPUT1_CHANNEL)
+        MessageChannel output1();
 
+        @Output(ChannelReceiver.OUTPUT2_CHANNEL)
+        MessageChannel output2();
+
+        @Output(ChannelReceiver.CHANNEL)
+        MessageChannel output3();
     }
-
 
 }
