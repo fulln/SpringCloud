@@ -18,12 +18,10 @@ public interface RecordingChannel {
 
     String REPLAY_SOURCE_CHANNEL = "replay-source-channel";
 
-
     @Input(REPLAY_SINK_CHANNEL)
     SubscribableChannel replayInput();
 
     @Output(REPLAY_SOURCE_CHANNEL)
     MessageChannel replayOutput();
-
 
 }

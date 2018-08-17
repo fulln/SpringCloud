@@ -24,7 +24,7 @@ import java.util.Map;
  * @Version： 0.0.1
  **/
 @Slf4j
-@EnableBinding(value = {ChannelReceiver.class})
+//@EnableBinding(value = {ChannelReceiver.class,})
 public class SinkReceiver {
 
     @StreamListener(value = ChannelReceiver.CHANNEL,condition = "headers['name'] == 'lea'")
@@ -63,7 +63,7 @@ public class SinkReceiver {
     }
 
     @StreamListener(ChannelReceiver.REPLAY_SOURCE_CHANNEL)
-    @SendTo(ChannelReceiver.REPLAY_SINK_CHANNEL)
+    @SendTo(value = {ChannelReceiver.REPLAY_SINK_CHANNEL})
     public UserEntity replayUser(@Payload UserEntity user) {
         log.info("Received from {} channel age: {}", ChannelReceiver.REPLAY_SOURCE_CHANNEL, user.getId());
         user.setId(user.getId() + 1);

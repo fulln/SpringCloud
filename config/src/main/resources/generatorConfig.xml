@@ -26,8 +26,8 @@
 
         <!--<javaClientGenerator type="XMLMAPPER" targetPackage="test.dao"  targetProject="src\main\java\com\fulln\pips\Dao"/>-->
 
-        <table tableName="pro_model_basic">
-            <generatedKey column="model_id" sqlStatement="Mysql"/>
+        <table tableName="log_device_multi_function_info">
+            <generatedKey column="log_id" sqlStatement="Mysql"/>
         </table>
     </context>
 </generatorConfiguration>

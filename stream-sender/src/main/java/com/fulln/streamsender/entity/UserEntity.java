@@ -40,4 +40,7 @@ public class UserEntity implements Serializable {
         this.userName = userName;
         this.passWord = passWord;
     }
+
+    public UserEntity() {
+    }
 }
